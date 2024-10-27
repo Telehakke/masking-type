@@ -1,0 +1,157 @@
+strong.mt-mask,
+em.mt-mask,
+mark.mt-mask {
+    background-image: linear-gradient(to right, currentColor, currentColor);
+    user-select: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+strong.mt-blur-1,
+em.mt-blur-1,
+mark.mt-blur-1 {
+    filter: blur(1px);
+    user-select: none;
+}
+
+strong.mt-blur-2,
+em.mt-blur-2,
+mark.mt-blur-2 {
+    filter: blur(2px);
+    user-select: none;
+}
+
+strong.mt-blur-3,
+em.mt-blur-3,
+mark.mt-blur-3 {
+    filter: blur(3px);
+    user-select: none;
+}
+
+strong.mt-blur-4,
+em.mt-blur-4,
+mark.mt-blur-4 {
+    filter: blur(4px);
+    user-select: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+strong.mt-peek-10,
+em.mt-peek-10 {
+    background-image: linear-gradient(
+        to right,
+        transparent 10%,
+        currentColor 10%
+    );
+    user-select: none;
+}
+
+strong.mt-peek-20,
+em.mt-peek-20 {
+    background-image: linear-gradient(
+        to right,
+        transparent 20%,
+        currentColor 20%
+    );
+    user-select: none;
+}
+
+strong.mt-peek-30,
+em.mt-peek-30 {
+    background-image: linear-gradient(
+        to right,
+        transparent 30%,
+        currentColor 30%
+    );
+    user-select: none;
+}
+
+strong.mt-peek-40,
+em.mt-peek-40 {
+    background-image: linear-gradient(
+        to right,
+        transparent 40%,
+        currentColor 40%
+    );
+    user-select: none;
+}
+
+strong.mt-peek-50,
+em.mt-peek-50 {
+    background-image: linear-gradient(
+        to right,
+        transparent 50%,
+        currentColor 50%
+    );
+    user-select: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+mark.mt-peek-10 {
+    background-image: linear-gradient(
+        to right,
+        var(--text-highlight-bg) 10%,
+        currentColor 10%
+    );
+    user-select: none;
+}
+
+mark.mt-peek-20 {
+    background-image: linear-gradient(
+        to right,
+        var(--text-highlight-bg) 20%,
+        currentColor 20%
+    );
+    user-select: none;
+}
+
+mark.mt-peek-30 {
+    background-image: linear-gradient(
+        to right,
+        var(--text-highlight-bg) 30%,
+        currentColor 30%
+    );
+    user-select: none;
+}
+
+mark.mt-peek-40 {
+    background-image: linear-gradient(
+        to right,
+        var(--text-highlight-bg) 40%,
+        currentColor 40%
+    );
+    user-select: none;
+}
+
+mark.mt-peek-50 {
+    background-image: linear-gradient(
+        to right,
+        var(--text-highlight-bg) 50%,
+        currentColor 50%
+    );
+    user-select: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+strong.mt-masked * {
+    opacity: 0;
+}
+
+em.mt-masked * {
+    opacity: 0;
+}
+
+mark.mt-masked * {
+    opacity: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+
+p.mt-note {
+    color: var(--color-orange);
+    font-size: var(--font-ui-small);
+    text-align: center;
+}
