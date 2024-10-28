@@ -7,18 +7,19 @@ import {
 
 const boldElement = new BoldElement();
 
-const resetBody = (appended: HTMLElement): void => {
-    document.body.innerHTML = "";
-    document.body.appendChild(appended);
+const appendToRoot = (appended: HTMLElement): HTMLElement => {
+    const div = document.createElement("div");
+    div.append(appended);
+    return div;
 };
 
 /* -------------------------------------------------------------------------- */
 
 test("表示→非表示へと状態が変化するかどうか", () => {
     const element = document.createElement("strong");
-    resetBody(element);
+    const root = appendToRoot(element);
 
-    boldElement.maskAll(document.body);
+    boldElement.maskAll(root);
 
     expect(element.classList.value).toBe("mt-mask");
 });
@@ -29,9 +30,9 @@ describe.each(["mt-blur-1", "mt-blur-2", "mt-blur-3", "mt-blur-4"])(
         test(v, () => {
             const element = document.createElement("strong");
             element.classList.add(v);
-            resetBody(element);
+            const root = appendToRoot(element);
 
-            boldElement.maskAll(document.body);
+            boldElement.maskAll(root);
 
             expect(element.classList.value).toBe("mt-mask");
         });
@@ -48,9 +49,9 @@ describe.each([
     test(v, () => {
         const element = document.createElement("strong");
         element.classList.add(v);
-        resetBody(element);
+        const root = appendToRoot(element);
 
-        boldElement.maskAll(document.body);
+        boldElement.maskAll(root);
 
         expect(element.classList.value).toBe("mt-mask");
     });
@@ -60,9 +61,9 @@ describe.each([
 
 test("振る舞いを付与すると、データセットも付与されているかどうか", () => {
     const element = document.createElement("strong");
-    resetBody(element);
+    const root = appendToRoot(element);
 
-    boldElement.addShowAndMaskBehaviorAll(document.body, {
+    boldElement.addShowAndMaskBehaviorAll(root, {
         type: "none",
         value: 0,
     });
@@ -72,8 +73,9 @@ test("振る舞いを付与すると、データセットも付与されてい�
 
 describe("クリックしたときの状態変化をテスト", () => {
     const element = document.createElement("strong");
-    resetBody(element);
-    boldElement.addShowAndMaskBehaviorAll(document.body, {
+    const root = appendToRoot(element);
+
+    boldElement.addShowAndMaskBehaviorAll(root, {
         type: "none",
         value: 0,
     });
@@ -94,8 +96,9 @@ describe.each([1, 2, 3, 4])(
     "クリックしたときの状態変化をテスト（ぼかしオプション付き）",
     (v) => {
         const element = document.createElement("strong");
-        resetBody(element);
-        boldElement.addShowAndMaskBehaviorAll(document.body, {
+        const root = appendToRoot(element);
+
+        boldElement.addShowAndMaskBehaviorAll(root, {
             type: "blur",
             value: v,
         });
@@ -122,8 +125,9 @@ describe.each([10, 20, 30, 40, 50])(
     "クリックしたときの状態変化をテスト（のぞき見オプション付き）",
     (v) => {
         const element = document.createElement("strong");
-        resetBody(element);
-        boldElement.addShowAndMaskBehaviorAll(document.body, {
+        const root = appendToRoot(element);
+
+        boldElement.addShowAndMaskBehaviorAll(root, {
             type: "peek",
             value: v,
         });
@@ -150,22 +154,22 @@ describe.each([10, 20, 30, 40, 50])(
 
 test("振る舞いを持つかどうかの判定1", () => {
     const element = document.createElement("strong");
-    resetBody(element);
+    const root = appendToRoot(element);
 
-    boldElement.addShowAndMaskBehaviorAll(document.body, {
+    boldElement.addShowAndMaskBehaviorAll(root, {
         type: "none",
         value: 0,
     });
-    const result = boldElement.canMaskAll(document.body);
+    const result = boldElement.canMaskAll(root);
 
     expect(result).toBeTruthy();
 });
 
 test("振る舞いを持つかどうかの判定2", () => {
     const element = document.createElement("strong");
-    resetBody(element);
+    const root = appendToRoot(element);
 
-    const result = boldElement.canMaskAll(document.body);
+    const result = boldElement.canMaskAll(root);
 
     expect(result).toBeFalsy();
 });
@@ -175,9 +179,9 @@ test("振る舞いを持つかどうかの判定2", () => {
 test("斜体に対して動作するかどうか", () => {
     const italicElement = new ItalicElement();
     const element = document.createElement("em");
-    resetBody(element);
+    const root = appendToRoot(element);
 
-    italicElement.maskAll(document.body);
+    italicElement.maskAll(root);
 
     expect(element.classList.value).toBe("mt-mask");
 });
@@ -185,9 +189,9 @@ test("斜体に対して動作するかどうか", () => {
 test("ハイライトに対して動作するかどうか", () => {
     const highlightElement = new HighlightElement();
     const element = document.createElement("mark");
-    resetBody(element);
+    const root = appendToRoot(element);
 
-    highlightElement.maskAll(document.body);
+    highlightElement.maskAll(root);
 
     expect(element.classList.value).toBe("mt-mask");
 });
