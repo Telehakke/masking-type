@@ -12,7 +12,7 @@ export default class DefaultPluginState {
     };
 
     /**
-     * デファクト値を返す。一部の値を上書き可能
+     * デフォルト値を返す。一部の値を上書き可能
      */
     // prettier-ignore
     static copyWith = ({
