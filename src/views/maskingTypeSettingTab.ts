@@ -31,10 +31,9 @@ export default class MaskingTypeSettingTab extends PluginSettingTab {
             .addToggle((c) => {
                 c.setValue(PluginContext.state.shouldMaskBold);
                 c.onChange((v) => {
-                    PluginContext.state = {
-                        ...PluginContext.state,
+                    PluginContext.state = PluginContext.copyWith({
                         shouldMaskBold: v,
-                    };
+                    });
                     this.pluginStateRepository.save(PluginContext.state);
                 });
             });
@@ -44,10 +43,9 @@ export default class MaskingTypeSettingTab extends PluginSettingTab {
             .addToggle((c) => {
                 c.setValue(PluginContext.state.shouldMaskItalic);
                 c.onChange((v) => {
-                    PluginContext.state = {
-                        ...PluginContext.state,
+                    PluginContext.state = PluginContext.copyWith({
                         shouldMaskItalic: v,
-                    };
+                    });
                     this.pluginStateRepository.save(PluginContext.state);
                 });
             });
@@ -55,12 +53,11 @@ export default class MaskingTypeSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName(this.translation.maskHighlight)
             .addToggle((c) => {
-                c.setValue(PluginContext.state.shouldMaskHighlights);
+                c.setValue(PluginContext.state.shouldMaskHighlight);
                 c.onChange((v) => {
-                    PluginContext.state = {
-                        ...PluginContext.state,
-                        shouldMaskHighlights: v,
-                    };
+                    PluginContext.state = PluginContext.copyWith({
+                        shouldMaskHighlight: v,
+                    });
                     this.pluginStateRepository.save(PluginContext.state);
                 });
             });
@@ -107,13 +104,12 @@ highlight: false
                         value = PluginContext.state.peekingPercentage;
                     }
 
-                    PluginContext.state = {
-                        ...PluginContext.state,
+                    PluginContext.state = PluginContext.copyWith({
                         selectedHint: {
                             type: v as HintType,
                             value: value,
                         },
-                    };
+                    });
                     this.pluginStateRepository.save(PluginContext.state);
                     this.display();
                 });
@@ -127,14 +123,13 @@ highlight: false
                     c.setValue(PluginContext.state.peekingPercentage);
                     c.setDynamicTooltip();
                     c.onChange((v) => {
-                        PluginContext.state = {
-                            ...PluginContext.state,
+                        PluginContext.state = PluginContext.copyWith({
                             selectedHint: {
                                 type: PluginContext.state.selectedHint.type,
                                 value: v,
                             },
                             peekingPercentage: v,
-                        };
+                        });
                         this.pluginStateRepository.save(PluginContext.state);
                     });
                 });
@@ -148,14 +143,13 @@ highlight: false
                     c.setValue(PluginContext.state.blurStrength);
                     c.setDynamicTooltip();
                     c.onChange((v) => {
-                        PluginContext.state = {
-                            ...PluginContext.state,
+                        PluginContext.state = PluginContext.copyWith({
                             selectedHint: {
                                 type: PluginContext.state.selectedHint.type,
                                 value: v,
                             },
                             blurStrength: v,
-                        };
+                        });
                         this.pluginStateRepository.save(PluginContext.state);
                     });
                 });

@@ -35,7 +35,7 @@ export const isHint = (value: any): value is Hint => {
 export const PluginStateKey = {
     shouldMaskBold: "shouldMaskBold",
     shouldMaskItalic: "shouldMaskItalic",
-    shouldMaskHighlights: "shouldMaskHighlights",
+    shouldMaskHighlight: "shouldMaskHighlight",
     selectedHint: "selectedHint",
     blurStrength: "blurStrength",
     peekingPercentage: "peekingPercentage",
@@ -44,7 +44,7 @@ export const PluginStateKey = {
 export type PluginState = {
     readonly shouldMaskBold: boolean;
     readonly shouldMaskItalic: boolean;
-    readonly shouldMaskHighlights: boolean;
+    readonly shouldMaskHighlight: boolean;
     readonly selectedHint: Hint;
     readonly blurStrength: number;
     readonly peekingPercentage: number;
@@ -55,7 +55,7 @@ export const isPluginState = (value: any): value is PluginState => {
     if (value == null) return false;
     if (typeof value[PluginStateKey.shouldMaskBold] !== "boolean") return false;
     if (typeof value[PluginStateKey.shouldMaskItalic] !== "boolean") return false;
-    if (typeof value[PluginStateKey.shouldMaskHighlights] !== "boolean") return false;
+    if (typeof value[PluginStateKey.shouldMaskHighlight] !== "boolean") return false;
     if (!isHint(value[PluginStateKey.selectedHint])) return false;
     if (typeof value[PluginStateKey.blurStrength] !== "number") return false;
     if (typeof value[PluginStateKey.peekingPercentage] !== "number") return false;

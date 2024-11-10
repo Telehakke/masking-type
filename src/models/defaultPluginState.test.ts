@@ -29,11 +29,11 @@ test("デフォルトの値を一部置き換えた、新しい値を取得で�
 });
 
 test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか3", () => {
-    const result = DefaultPluginState.copyWith({ shouldMaskHighlights: false });
+    const result = DefaultPluginState.copyWith({ shouldMaskHighlight: false });
 
     const expected: PluginState = {
         ...DefaultPluginState.value,
-        shouldMaskHighlights: false,
+        shouldMaskHighlight: false,
     };
     expect(result).toEqual(expected);
 });

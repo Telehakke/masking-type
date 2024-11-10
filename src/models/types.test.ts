@@ -43,7 +43,7 @@ test("PluginState型であるかどうかの判定1", () => {
     const value: PluginState = {
         shouldMaskBold: false,
         shouldMaskItalic: false,
-        shouldMaskHighlights: false,
+        shouldMaskHighlight: false,
         selectedHint: { type: HintEnum.none, value: 0 },
         blurStrength: 0,
         peekingPercentage: 0,

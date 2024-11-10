@@ -22,7 +22,7 @@ export default class MaskingTypePlugin extends Plugin {
         const noteState: NoteState = {
             bold: PluginContext.state.shouldMaskBold,
             italic: PluginContext.state.shouldMaskItalic,
-            highlight: PluginContext.state.shouldMaskHighlights,
+            highlight: PluginContext.state.shouldMaskHighlight,
         };
         const translation = Translator.getTranslation(moment.locale());
 
@@ -43,7 +43,7 @@ export default class MaskingTypePlugin extends Plugin {
                     PluginContext.state.shouldMaskItalic;
                 noteState.highlight =
                     frontmatter[NoteStateKey.highlight] ??
-                    PluginContext.state.shouldMaskHighlights;
+                    PluginContext.state.shouldMaskHighlight;
             }
 
             if (noteState.bold) {
@@ -100,7 +100,7 @@ export default class MaskingTypePlugin extends Plugin {
                 this.elements = [];
                 noteState.bold = PluginContext.state.shouldMaskBold;
                 noteState.italic = PluginContext.state.shouldMaskItalic;
-                noteState.highlight = PluginContext.state.shouldMaskHighlights;
+                noteState.highlight = PluginContext.state.shouldMaskHighlight;
             })
         );
 

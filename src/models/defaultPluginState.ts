@@ -4,7 +4,7 @@ export default class DefaultPluginState {
     static readonly value: PluginState = {
         shouldMaskBold: true,
         shouldMaskItalic: true,
-        shouldMaskHighlights: true,
+        shouldMaskHighlight: true,
         selectedHint: { type: HintEnum.none, value: 0 },
         blurStrength: 2,
         peekingPercentage: 30,
@@ -17,14 +17,14 @@ export default class DefaultPluginState {
     static copyWith = ({
         shouldMaskBold,
         shouldMaskItalic,
-        shouldMaskHighlights,
+        shouldMaskHighlight,
         selectedHint,
         blurStrength,
         peekingPercentage,
     }: {
         shouldMaskBold?: boolean;
         shouldMaskItalic?: boolean;
-        shouldMaskHighlights?: boolean;
+        shouldMaskHighlight?: boolean;
         selectedHint?: Hint;
         blurStrength?: number
         peekingPercentage?: number;
@@ -34,8 +34,8 @@ export default class DefaultPluginState {
                 shouldMaskBold ?? this.value.shouldMaskBold,
             shouldMaskItalic:
                 shouldMaskItalic ?? this.value.shouldMaskItalic,
-            shouldMaskHighlights:
-                shouldMaskHighlights ?? this.value.shouldMaskHighlights,
+            shouldMaskHighlight:
+                shouldMaskHighlight ?? this.value.shouldMaskHighlight,
             selectedHint:
                 selectedHint ?? {...this.value.selectedHint},
             blurStrength:
