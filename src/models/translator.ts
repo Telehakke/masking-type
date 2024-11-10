@@ -6,11 +6,6 @@ export type Translation = {
     readonly maskHighlight: string;
     readonly setForEachNote: string;
     readonly descriptionOfSetForEachNote: string;
-    readonly maskAll: string;
-    readonly maskOnlyBold: string;
-    readonly maskOnlyItalic: string;
-    readonly maskOnlyHighlight: string;
-    readonly allNotMasked: string;
     readonly hint: string;
     readonly descriptionOfHint: string;
     readonly none: string;
@@ -29,12 +24,7 @@ const translationEN: Translation = {
     maskHighlight: "Mask highlight",
     setForEachNote: "Set for each note",
     descriptionOfSetForEachNote:
-        "By copying a comment and pasting it at the beginning of the note, the setting of that comment takes precedence.",
-    maskAll: "Mask all",
-    maskOnlyBold: "Mask only bold",
-    maskOnlyItalic: "Mask only italic",
-    maskOnlyHighlight: "Mask only highlight",
-    allNotMasked: "All not masked",
+        "Copy the property and paste it into the beginning of the note. Next, check the item you want to hide.",
     hint: "Hint",
     descriptionOfHint: "Show a hint before displaying all.",
     none: "None",
@@ -53,12 +43,7 @@ const translationJA: Translation = {
     maskHighlight: "ハイライトを隠す",
     setForEachNote: "ノートごとに設定する",
     descriptionOfSetForEachNote:
-        "コメントをコピーし、ノートの先頭にペーストすることで、そのコメントの設定が優先されます",
-    maskAll: "全て隠す",
-    maskOnlyBold: "太字だけを隠す",
-    maskOnlyItalic: "斜体だけを隠す",
-    maskOnlyHighlight: "ハイライトだけを隠す",
-    allNotMasked: "全て隠さない",
+        "プロパティをコピーし、ノートの先頭にペーストします。次に、隠したい項目にチェックを付けてください。",
     hint: "ヒント",
     descriptionOfHint: "全て表示する前にヒントを表示します",
     none: "なし",

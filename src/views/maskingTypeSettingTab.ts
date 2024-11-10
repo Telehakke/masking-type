@@ -4,10 +4,8 @@ import { HintEnum, HintType } from "../models/types";
 import { Translation } from "../models/translator";
 import PluginContext from "../models/pluginContext";
 import Clipboard from "../models/clipboard";
-import Comment from "../models/comment";
 
 export default class MaskingTypeSettingTab extends PluginSettingTab {
-    private readonly iconNameOfCopy = "clipboard-copy";
     private readonly pluginStateRepository: PluginStateRepository;
     private readonly translation: Translation;
 
@@ -69,75 +67,20 @@ export default class MaskingTypeSettingTab extends PluginSettingTab {
 
         /* -------------------------------------------------------------------------- */
 
+        // prettier-ignore
         new Setting(containerEl)
             .setName(this.translation.setForEachNote)
             .setDesc(this.translation.descriptionOfSetForEachNote)
-            .setHeading();
-
-        new Setting(containerEl)
-            .setName(this.translation.maskAll)
-            .setDesc(Comment.maskAll)
+            .setHeading()
             .addButton((c) => {
-                c.setIcon(this.iconNameOfCopy);
+                c.setIcon("clipboard-copy");
                 c.onClick((_) => {
                     Clipboard.write(
-                        Comment.maskAll,
-                        () => new Notice(this.translation.copySucceeded),
-                        () => new Notice(this.translation.copyFailed)
-                    );
-                });
-            });
-
-        new Setting(containerEl)
-            .setName(this.translation.maskOnlyBold)
-            .setDesc(Comment.maskOnlyBold)
-            .addButton((c) => {
-                c.setIcon(this.iconNameOfCopy);
-                c.onClick((_) => {
-                    Clipboard.write(
-                        Comment.maskOnlyBold,
-                        () => new Notice(this.translation.copySucceeded),
-                        () => new Notice(this.translation.copyFailed)
-                    );
-                });
-            });
-
-        new Setting(containerEl)
-            .setName(this.translation.maskOnlyItalic)
-            .setDesc(Comment.maskOnlyItalic)
-            .addButton((c) => {
-                c.setIcon(this.iconNameOfCopy);
-                c.onClick((_) => {
-                    Clipboard.write(
-                        Comment.maskOnlyItalic,
-                        () => new Notice(this.translation.copySucceeded),
-                        () => new Notice(this.translation.copyFailed)
-                    );
-                });
-            });
-
-        new Setting(containerEl)
-            .setName(this.translation.maskOnlyHighlight)
-            .setDesc(Comment.maskOnlyHighlight)
-            .addButton((c) => {
-                c.setIcon(this.iconNameOfCopy);
-                c.onClick((_) => {
-                    Clipboard.write(
-                        Comment.maskOnlyHighlight,
-                        () => new Notice(this.translation.copySucceeded),
-                        () => new Notice(this.translation.copyFailed)
-                    );
-                });
-            });
-
-        new Setting(containerEl)
-            .setName(this.translation.allNotMasked)
-            .setDesc(Comment.allNotMasked)
-            .addButton((c) => {
-                c.setIcon(this.iconNameOfCopy);
-                c.onClick((_) => {
-                    Clipboard.write(
-                        Comment.allNotMasked,
+`---
+bold: false
+italic: false
+highlight: false
+---`,
                         () => new Notice(this.translation.copySucceeded),
                         () => new Notice(this.translation.copyFailed)
                     );

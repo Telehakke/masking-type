@@ -7,8 +7,7 @@ import {
 } from "./models/HTMLElementOperator";
 import PluginStateRepository from "./models/pluginStateRepository";
 import PluginContext from "./models/pluginContext";
-import JSONCommentParser from "./models/JSONCommentParser";
-import { isNoteState, NoteState } from "./models/types";
+import { NoteState, NoteStateKey } from "./models/types";
 import { Translator } from "./models/translator";
 
 export default class MaskingTypePlugin extends Plugin {
@@ -17,7 +16,6 @@ export default class MaskingTypePlugin extends Plugin {
     private readonly italicElement = new ItalicElement();
     private readonly highlightElement = new HighlightElement();
     private elements: HTMLElement[] = [];
-    private translation = Translator.getTranslation(moment.locale());
 
     async onload(): Promise<void> {
         PluginContext.state = await this.pluginStateRepository.load();
@@ -26,6 +24,7 @@ export default class MaskingTypePlugin extends Plugin {
             italic: PluginContext.state.shouldMaskItalic,
             highlight: PluginContext.state.shouldMaskHighlights,
         };
+        const translation = Translator.getTranslation(moment.locale());
 
         // 閲覧モードにおいて、太字、斜体、ハイライトを隠しつつ、
         // マスク部分を開閉する振る舞いを与える
@@ -33,21 +32,18 @@ export default class MaskingTypePlugin extends Plugin {
             // ライブプレビューにおいて、テキストを隠す振る舞いを付与しない
             if (this.markdownViewMode() === "source") return;
 
-            const info = ctx.getSectionInfo(el);
-            if (info == null) return;
-
-            const editor = this.app.workspace.activeEditor?.editor;
-            if (editor == null) return;
-
-            // ノートに設定コメントがあれば、その設定を優先する
-            const result = new JSONCommentParser(editor).parse(
-                info.lineStart,
-                info.lineEnd
-            );
-            if (isNoteState(result)) {
-                noteState.bold = result.bold;
-                noteState.italic = result.italic;
-                noteState.highlight = result.highlight;
+            // ノートにプロパティがあれば、その設定を優先する
+            const frontmatter = ctx.frontmatter;
+            if (frontmatter != null) {
+                noteState.bold =
+                    frontmatter[NoteStateKey.bold] ??
+                    PluginContext.state.shouldMaskBold;
+                noteState.italic =
+                    frontmatter[NoteStateKey.italic] ??
+                    PluginContext.state.shouldMaskItalic;
+                noteState.highlight =
+                    frontmatter[NoteStateKey.highlight] ??
+                    PluginContext.state.shouldMaskHighlights;
             }
 
             if (noteState.bold) {
@@ -113,7 +109,7 @@ export default class MaskingTypePlugin extends Plugin {
                 this.app,
                 this,
                 this.pluginStateRepository,
-                this.translation
+                translation
             )
         );
     }
