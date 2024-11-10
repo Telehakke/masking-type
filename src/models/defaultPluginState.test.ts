@@ -9,16 +9,6 @@ test("デフォルトの値を取得できるかどうか", () => {
 });
 
 test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか1", () => {
-    const result = DefaultPluginState.copyWith({ language: "ja" });
-
-    const expected: PluginState = {
-        ...DefaultPluginState.value,
-        language: "ja",
-    };
-    expect(result).toEqual(expected);
-});
-
-test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか2", () => {
     const result = DefaultPluginState.copyWith({ shouldMaskBold: false });
 
     const expected: PluginState = {
@@ -28,7 +18,7 @@ test("デフォルトの値を一部置き換えた、新しい値を取得で�
     expect(result).toEqual(expected);
 });
 
-test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか3", () => {
+test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか2", () => {
     const result = DefaultPluginState.copyWith({ shouldMaskItalic: false });
 
     const expected: PluginState = {
@@ -38,17 +28,17 @@ test("デフォルトの値を一部置き換えた、新しい値を取得で�
     expect(result).toEqual(expected);
 });
 
-test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか4", () => {
-    const result = DefaultPluginState.copyWith({ shouldMaskHighlights: false });
+test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか3", () => {
+    const result = DefaultPluginState.copyWith({ shouldMaskHighlight: false });
 
     const expected: PluginState = {
         ...DefaultPluginState.value,
-        shouldMaskHighlights: false,
+        shouldMaskHighlight: false,
     };
     expect(result).toEqual(expected);
 });
 
-test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか5", () => {
+test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか4", () => {
     const hint: Hint = {
         type: "blur",
         value: 1,
@@ -62,7 +52,7 @@ test("デフォルトの値を一部置き換えた、新しい値を取得で�
     expect(result).toEqual(expected);
 });
 
-test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか6", () => {
+test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか5", () => {
     const result = DefaultPluginState.copyWith({ blurStrength: 1 });
 
     const expected: PluginState = {
@@ -72,7 +62,7 @@ test("デフォルトの値を一部置き換えた、新しい値を取得で�
     expect(result).toEqual(expected);
 });
 
-test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか7", () => {
+test("デフォルトの値を一部置き換えた、新しい値を取得できるかどうか6", () => {
     const result = DefaultPluginState.copyWith({ peekingPercentage: 10 });
 
     const expected: PluginState = {

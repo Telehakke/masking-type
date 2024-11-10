@@ -24,9 +24,11 @@ Items that are turned on in the settings are filled in.
 
 ## Set for each note / ノートごとに設定する
 
-If you copy a comment from the settings and paste it at the beginning of the note, the settings for that comment take precedence.
+Copy the property from the settings and paste it into the beginning of the note.  
+Next, check the item you want to hide.
 
-設定からコメントをコピーし、ノートの先頭にペーストすることで、そのコメントの設定が優先されます
+設定からプロパティをコピーし、ノートの先頭にペーストします  
+次に、隠したい項目にチェックを付けてください
 
 ![demo](readmeAssets/demo02.png)
 

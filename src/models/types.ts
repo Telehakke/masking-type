@@ -3,14 +3,6 @@ export const LanguageEnum = {
     ja: "ja",
 } as const;
 
-export type Language = (typeof LanguageEnum)[keyof typeof LanguageEnum];
-
-export const isLanguage = (value: any): value is Language => {
-    if (value === LanguageEnum.en) return true;
-    if (value === LanguageEnum.ja) return true;
-    return false;
-};
-
 /* -------------------------------------------------------------------------- */
 
 export const HintEnum = {
@@ -41,20 +33,18 @@ export const isHint = (value: any): value is Hint => {
 /* -------------------------------------------------------------------------- */
 
 export const PluginStateKey = {
-    language: "language",
     shouldMaskBold: "shouldMaskBold",
     shouldMaskItalic: "shouldMaskItalic",
-    shouldMaskHighlights: "shouldMaskHighlights",
+    shouldMaskHighlight: "shouldMaskHighlight",
     selectedHint: "selectedHint",
     blurStrength: "blurStrength",
     peekingPercentage: "peekingPercentage",
 } as const;
 
 export type PluginState = {
-    readonly language: Language;
     readonly shouldMaskBold: boolean;
     readonly shouldMaskItalic: boolean;
-    readonly shouldMaskHighlights: boolean;
+    readonly shouldMaskHighlight: boolean;
     readonly selectedHint: Hint;
     readonly blurStrength: number;
     readonly peekingPercentage: number;
@@ -63,10 +53,9 @@ export type PluginState = {
 // prettier-ignore
 export const isPluginState = (value: any): value is PluginState => {
     if (value == null) return false;
-    if (!isLanguage(value[PluginStateKey.language])) return false;
     if (typeof value[PluginStateKey.shouldMaskBold] !== "boolean") return false;
     if (typeof value[PluginStateKey.shouldMaskItalic] !== "boolean") return false;
-    if (typeof value[PluginStateKey.shouldMaskHighlights] !== "boolean") return false;
+    if (typeof value[PluginStateKey.shouldMaskHighlight] !== "boolean") return false;
     if (!isHint(value[PluginStateKey.selectedHint])) return false;
     if (typeof value[PluginStateKey.blurStrength] !== "number") return false;
     if (typeof value[PluginStateKey.peekingPercentage] !== "number") return false;

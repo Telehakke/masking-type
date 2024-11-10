@@ -1,4 +1,4 @@
-import { MarkdownView, Plugin, MarkdownViewModeType } from "obsidian";
+import { MarkdownView, Plugin, MarkdownViewModeType, moment } from "obsidian";
 import MaskingTypeSettingTab from "./views/maskingTypeSettingTab";
 import {
     BoldElement,
@@ -7,8 +7,8 @@ import {
 } from "./models/HTMLElementOperator";
 import PluginStateRepository from "./models/pluginStateRepository";
 import PluginContext from "./models/pluginContext";
-import JSONCommentParser from "./models/JSONCommentParser";
-import { isNoteState, NoteState } from "./models/types";
+import { NoteState, NoteStateKey } from "./models/types";
+import { Translator } from "./models/translator";
 
 export default class MaskingTypePlugin extends Plugin {
     private readonly pluginStateRepository = new PluginStateRepository(this);
@@ -22,30 +22,30 @@ export default class MaskingTypePlugin extends Plugin {
         const noteState: NoteState = {
             bold: PluginContext.state.shouldMaskBold,
             italic: PluginContext.state.shouldMaskItalic,
-            highlight: PluginContext.state.shouldMaskHighlights,
+            highlight: PluginContext.state.shouldMaskHighlight,
         };
+        const translation = Translator.getTranslation(moment.locale());
 
         // 閲覧モードにおいて、太字、斜体、ハイライトを隠しつつ、
         // マスク部分を開閉する振る舞いを与える
         this.registerMarkdownPostProcessor((el, ctx) => {
-            // ライブプレビューにおいて、テキストを隠す振る舞いを付与しない
-            if (this.markdownViewMode() === "source") return;
+            // ライブプレビューにおいて、
+            // テーブルとコールアウトにテキストを隠す振る舞いを付与しない
+            if (el.classList.contains("table-cell-wrapper")) return;
+            if (el.classList.contains("markdown-rendered")) return;
 
-            const info = ctx.getSectionInfo(el);
-            if (info == null) return;
-
-            const editor = this.app.workspace.activeEditor?.editor;
-            if (editor == null) return;
-
-            // ノートに設定コメントがあれば、その設定を優先する
-            const result = new JSONCommentParser(editor).parse(
-                info.lineStart,
-                info.lineEnd
-            );
-            if (isNoteState(result)) {
-                noteState.bold = result.bold;
-                noteState.italic = result.italic;
-                noteState.highlight = result.highlight;
+            // ノートにプロパティがあれば、その設定を優先する
+            const frontmatter = ctx.frontmatter;
+            if (frontmatter != null) {
+                noteState.bold =
+                    frontmatter[NoteStateKey.bold] ??
+                    PluginContext.state.shouldMaskBold;
+                noteState.italic =
+                    frontmatter[NoteStateKey.italic] ??
+                    PluginContext.state.shouldMaskItalic;
+                noteState.highlight =
+                    frontmatter[NoteStateKey.highlight] ??
+                    PluginContext.state.shouldMaskHighlight;
             }
 
             if (noteState.bold) {
@@ -102,7 +102,7 @@ export default class MaskingTypePlugin extends Plugin {
                 this.elements = [];
                 noteState.bold = PluginContext.state.shouldMaskBold;
                 noteState.italic = PluginContext.state.shouldMaskItalic;
-                noteState.highlight = PluginContext.state.shouldMaskHighlights;
+                noteState.highlight = PluginContext.state.shouldMaskHighlight;
             })
         );
 
@@ -110,7 +110,8 @@ export default class MaskingTypePlugin extends Plugin {
             new MaskingTypeSettingTab(
                 this.app,
                 this,
-                this.pluginStateRepository
+                this.pluginStateRepository,
+                translation
             )
         );
     }

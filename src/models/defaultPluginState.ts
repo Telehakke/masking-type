@@ -1,46 +1,41 @@
-import { Hint, HintEnum, Language, PluginState } from "./types";
+import { Hint, HintEnum, PluginState } from "./types";
 
 export default class DefaultPluginState {
     static readonly value: PluginState = {
-        language: "en",
         shouldMaskBold: true,
         shouldMaskItalic: true,
-        shouldMaskHighlights: true,
+        shouldMaskHighlight: true,
         selectedHint: { type: HintEnum.none, value: 0 },
         blurStrength: 2,
         peekingPercentage: 30,
     };
 
     /**
-     * デファクト値を返す。一部の値を上書き可能
+     * デフォルト値を返す。一部の値を上書き可能
      */
     // prettier-ignore
     static copyWith = ({
-        language,
         shouldMaskBold,
         shouldMaskItalic,
-        shouldMaskHighlights,
+        shouldMaskHighlight,
         selectedHint,
         blurStrength,
         peekingPercentage,
     }: {
-        language?: Language;
         shouldMaskBold?: boolean;
         shouldMaskItalic?: boolean;
-        shouldMaskHighlights?: boolean;
+        shouldMaskHighlight?: boolean;
         selectedHint?: Hint;
         blurStrength?: number
         peekingPercentage?: number;
     }): PluginState => {
         const copied: PluginState = {
-            language:
-                language ?? this.value.language,
             shouldMaskBold:
                 shouldMaskBold ?? this.value.shouldMaskBold,
             shouldMaskItalic:
                 shouldMaskItalic ?? this.value.shouldMaskItalic,
-            shouldMaskHighlights:
-                shouldMaskHighlights ?? this.value.shouldMaskHighlights,
+            shouldMaskHighlight:
+                shouldMaskHighlight ?? this.value.shouldMaskHighlight,
             selectedHint:
                 selectedHint ?? {...this.value.selectedHint},
             blurStrength:

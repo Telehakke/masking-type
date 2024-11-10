@@ -20,10 +20,9 @@ export default class PluginStateRepository {
         }
 
         const state = DefaultPluginState.copyWith({
-            language: data[PluginStateKey.language],
             shouldMaskBold: data[PluginStateKey.shouldMaskBold],
             shouldMaskItalic: data[PluginStateKey.shouldMaskItalic],
-            shouldMaskHighlights: data[PluginStateKey.shouldMaskHighlights],
+            shouldMaskHighlight: data[PluginStateKey.shouldMaskHighlight],
             selectedHint: data[PluginStateKey.selectedHint],
             blurStrength: data[PluginStateKey.blurStrength],
             peekingPercentage: data[PluginStateKey.peekingPercentage],
