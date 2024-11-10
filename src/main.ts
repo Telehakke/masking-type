@@ -1,4 +1,4 @@
-import { MarkdownView, Plugin, MarkdownViewModeType } from "obsidian";
+import { MarkdownView, Plugin, MarkdownViewModeType, moment } from "obsidian";
 import MaskingTypeSettingTab from "./views/maskingTypeSettingTab";
 import {
     BoldElement,
@@ -9,6 +9,7 @@ import PluginStateRepository from "./models/pluginStateRepository";
 import PluginContext from "./models/pluginContext";
 import JSONCommentParser from "./models/JSONCommentParser";
 import { isNoteState, NoteState } from "./models/types";
+import { Translator } from "./models/translator";
 
 export default class MaskingTypePlugin extends Plugin {
     private readonly pluginStateRepository = new PluginStateRepository(this);
@@ -16,6 +17,7 @@ export default class MaskingTypePlugin extends Plugin {
     private readonly italicElement = new ItalicElement();
     private readonly highlightElement = new HighlightElement();
     private elements: HTMLElement[] = [];
+    private translation = Translator.getTranslation(moment.locale());
 
     async onload(): Promise<void> {
         PluginContext.state = await this.pluginStateRepository.load();
@@ -110,7 +112,8 @@ export default class MaskingTypePlugin extends Plugin {
             new MaskingTypeSettingTab(
                 this.app,
                 this,
-                this.pluginStateRepository
+                this.pluginStateRepository,
+                this.translation
             )
         );
     }

@@ -3,14 +3,6 @@ export const LanguageEnum = {
     ja: "ja",
 } as const;
 
-export type Language = (typeof LanguageEnum)[keyof typeof LanguageEnum];
-
-export const isLanguage = (value: any): value is Language => {
-    if (value === LanguageEnum.en) return true;
-    if (value === LanguageEnum.ja) return true;
-    return false;
-};
-
 /* -------------------------------------------------------------------------- */
 
 export const HintEnum = {
@@ -41,7 +33,6 @@ export const isHint = (value: any): value is Hint => {
 /* -------------------------------------------------------------------------- */
 
 export const PluginStateKey = {
-    language: "language",
     shouldMaskBold: "shouldMaskBold",
     shouldMaskItalic: "shouldMaskItalic",
     shouldMaskHighlights: "shouldMaskHighlights",
@@ -51,7 +42,6 @@ export const PluginStateKey = {
 } as const;
 
 export type PluginState = {
-    readonly language: Language;
     readonly shouldMaskBold: boolean;
     readonly shouldMaskItalic: boolean;
     readonly shouldMaskHighlights: boolean;
@@ -63,7 +53,6 @@ export type PluginState = {
 // prettier-ignore
 export const isPluginState = (value: any): value is PluginState => {
     if (value == null) return false;
-    if (!isLanguage(value[PluginStateKey.language])) return false;
     if (typeof value[PluginStateKey.shouldMaskBold] !== "boolean") return false;
     if (typeof value[PluginStateKey.shouldMaskItalic] !== "boolean") return false;
     if (typeof value[PluginStateKey.shouldMaskHighlights] !== "boolean") return false;

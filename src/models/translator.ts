@@ -1,6 +1,6 @@
-import { Language, LanguageEnum } from "./types";
+import { LanguageEnum } from "./types";
 
-type Translation = {
+export type Translation = {
     readonly maskBold: string;
     readonly maskItalic: string;
     readonly maskHighlight: string;
@@ -71,8 +71,8 @@ const translationJA: Translation = {
     copyFailed: "コピーに失敗しました",
 };
 
-export default class Translator {
-    private static readonly translations: Map<Language, Translation> = new Map([
+export class Translator {
+    private static readonly translations: Map<string, Translation> = new Map([
         [LanguageEnum.en, translationEN],
         [LanguageEnum.ja, translationJA],
     ]);
@@ -80,12 +80,7 @@ export default class Translator {
     /**
      * 指定した言語の翻訳文を取得
      */
-    static getTranslation = (language: Language): Translation => {
-        const result = this.translations.get(language);
-        if (result == null) {
-            return translationEN;
-        }
-
-        return result;
+    static getTranslation = (language: string): Translation => {
+        return this.translations.get(language) ?? translationEN;
     };
 }

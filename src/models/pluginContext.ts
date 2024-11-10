@@ -3,7 +3,6 @@ import { PluginState } from "./types";
 
 export default class PluginContext {
     static state: PluginState = {
-        language: DefaultPluginState.value.language,
         shouldMaskBold: DefaultPluginState.value.shouldMaskBold,
         shouldMaskItalic: DefaultPluginState.value.shouldMaskItalic,
         shouldMaskHighlights: DefaultPluginState.value.shouldMaskHighlights,

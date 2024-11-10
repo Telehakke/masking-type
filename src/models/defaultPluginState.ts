@@ -1,8 +1,7 @@
-import { Hint, HintEnum, Language, PluginState } from "./types";
+import { Hint, HintEnum, PluginState } from "./types";
 
 export default class DefaultPluginState {
     static readonly value: PluginState = {
-        language: "en",
         shouldMaskBold: true,
         shouldMaskItalic: true,
         shouldMaskHighlights: true,
@@ -16,7 +15,6 @@ export default class DefaultPluginState {
      */
     // prettier-ignore
     static copyWith = ({
-        language,
         shouldMaskBold,
         shouldMaskItalic,
         shouldMaskHighlights,
@@ -24,7 +22,6 @@ export default class DefaultPluginState {
         blurStrength,
         peekingPercentage,
     }: {
-        language?: Language;
         shouldMaskBold?: boolean;
         shouldMaskItalic?: boolean;
         shouldMaskHighlights?: boolean;
@@ -33,8 +30,6 @@ export default class DefaultPluginState {
         peekingPercentage?: number;
     }): PluginState => {
         const copied: PluginState = {
-            language:
-                language ?? this.value.language,
             shouldMaskBold:
                 shouldMaskBold ?? this.value.shouldMaskBold,
             shouldMaskItalic:
