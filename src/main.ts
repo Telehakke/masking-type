@@ -29,8 +29,10 @@ export default class MaskingTypePlugin extends Plugin {
         // 閲覧モードにおいて、太字、斜体、ハイライトを隠しつつ、
         // マスク部分を開閉する振る舞いを与える
         this.registerMarkdownPostProcessor((el, ctx) => {
-            // ライブプレビューにおいて、テキストを隠す振る舞いを付与しない
-            if (this.markdownViewMode() === "source") return;
+            // ライブプレビューにおいて、
+            // テーブルとコールアウトにテキストを隠す振る舞いを付与しない
+            if (el.classList.contains("table-cell-wrapper")) return;
+            if (el.classList.contains("markdown-rendered")) return;
 
             // ノートにプロパティがあれば、その設定を優先する
             const frontmatter = ctx.frontmatter;
