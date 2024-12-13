@@ -47,6 +47,8 @@ test("PluginState型であるかどうかの判定1", () => {
         selectedHint: { type: HintEnum.none, value: 0 },
         blurStrength: 0,
         peekingPercentage: 0,
+        shouldDisplayOnMouseOver: false,
+        shouldSetClozeTestStyle: false,
     };
     expect(isPluginState(value)).toBeTruthy();
 });

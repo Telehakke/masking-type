@@ -26,6 +26,10 @@ export default class PluginStateRepository {
             selectedHint: data[PluginStateKey.selectedHint],
             blurStrength: data[PluginStateKey.blurStrength],
             peekingPercentage: data[PluginStateKey.peekingPercentage],
+            shouldDisplayOnMouseOver:
+                data[PluginStateKey.shouldDisplayOnMouseOver],
+            shouldSetClozeTestStyle:
+                data[PluginStateKey.shouldSetClozeTestStyle],
         });
         return state;
     };

@@ -39,6 +39,8 @@ export const PluginStateKey = {
     selectedHint: "selectedHint",
     blurStrength: "blurStrength",
     peekingPercentage: "peekingPercentage",
+    shouldDisplayOnMouseOver: "shouldDisplayOnMouseOver",
+    shouldSetClozeTestStyle: "shouldSetClozeTestStyle",
 } as const;
 
 export type PluginState = {
@@ -48,6 +50,8 @@ export type PluginState = {
     readonly selectedHint: Hint;
     readonly blurStrength: number;
     readonly peekingPercentage: number;
+    readonly shouldDisplayOnMouseOver: boolean;
+    readonly shouldSetClozeTestStyle: boolean;
 };
 
 // prettier-ignore
@@ -59,6 +63,8 @@ export const isPluginState = (value: any): value is PluginState => {
     if (!isHint(value[PluginStateKey.selectedHint])) return false;
     if (typeof value[PluginStateKey.blurStrength] !== "number") return false;
     if (typeof value[PluginStateKey.peekingPercentage] !== "number") return false;
+    if (typeof value[PluginStateKey.shouldDisplayOnMouseOver] !== "boolean") return false;
+    if (typeof value[PluginStateKey.shouldSetClozeTestStyle] !== "boolean") return false;
     return true;
 };
 

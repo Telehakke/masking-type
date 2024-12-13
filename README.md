@@ -22,6 +22,16 @@ Items that are turned on in the settings are filled in.
 
 ![demo](readmeAssets/demo01.png)
 
+## Display text / テキストを表示
+
+Click on the filled area.  
+Or hover mouse pointer over it (version 1.1.0~, desktop only)
+
+塗りつぶされた部分をクリックしてください  
+またはマウスポインタを重ねます（バージョン 1.1.0~、デスクトップ専用）
+
+![demo](readmeAssets/demo01-1.png)
+
 ## Set for each note / ノートごとに設定する
 
 Copy the property from the settings and paste it into the beginning of the note.  
@@ -49,3 +59,11 @@ Hint type
 -   のぞき見
 
 ![demo](readmeAssets/demo03.png)
+
+## PDF cloze test / PDF の穴埋め化
+
+Convert filled areas to cloze test when using Export to PDF. (version 1.1.0~, desktop only)
+
+PDF にエクスポートを使用する際に、塗りつぶし箇所を穴埋め問題に変換します（バージョン 1.1.0~、デスクトップ専用）
+
+![demo](readmeAssets/demo04.png)
