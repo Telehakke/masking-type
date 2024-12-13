@@ -1,3 +1,4 @@
+import PluginContext from "./pluginContext";
 import { Hint, HintEnum } from "./types";
 
 class MaskClassName {
@@ -176,7 +177,11 @@ abstract class HTMLElementOperator {
     /**
      * クリックで表示・非表示の状態へと切り替える振る舞いを与える
      */
-    addShowAndMaskBehaviorAll = (element: HTMLElement, hint: Hint): void => {
+    addShowAndMaskBehaviorAll = (
+        element: HTMLElement,
+        hint: Hint,
+        isMobile: boolean
+    ): void => {
         element
             .querySelectorAll(this.selector) //
             .forEach((v) => {
@@ -184,11 +189,35 @@ abstract class HTMLElementOperator {
 
                 CanMaskDataset.add(v);
                 this.addClickEvent(v, hint);
+
+                if (PluginContext.state.shouldDisplayOnMouseOver) {
+                    this.addMouseoverEvent(v, hint, isMobile);
+                }
             });
     };
 
     protected addClickEvent = (element: Element, hint: Hint): void => {
         element.addEventListener("click", (_) => {
+            if (hint.type === HintEnum.blur) {
+                BlurClassName.handleClick(element, hint.value);
+                return;
+            }
+            if (hint.type === HintEnum.peek) {
+                PeekClassName.handleClick(element, hint.value);
+                return;
+            }
+            MaskClassName.handleClick(element);
+        });
+    };
+
+    protected addMouseoverEvent = (
+        element: HTMLElement,
+        hint: Hint,
+        isMobile: boolean
+    ): void => {
+        element.addEventListener("mouseover", (_) => {
+            if (isMobile) return;
+
             if (hint.type === HintEnum.blur) {
                 BlurClassName.handleClick(element, hint.value);
                 return;

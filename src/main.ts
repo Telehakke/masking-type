@@ -1,4 +1,10 @@
-import { MarkdownView, Plugin, MarkdownViewModeType, moment } from "obsidian";
+import {
+    MarkdownView,
+    Plugin,
+    MarkdownViewModeType,
+    moment,
+    Platform,
+} from "obsidian";
 import MaskingTypeSettingTab from "./views/maskingTypeSettingTab";
 import {
     BoldElement,
@@ -25,6 +31,7 @@ export default class MaskingTypePlugin extends Plugin {
             highlight: PluginContext.state.shouldMaskHighlight,
         };
         const translation = Translator.getTranslation(moment.locale());
+        const isMobile = Platform.isMobile;
 
         // 閲覧モードにおいて、太字、斜体、ハイライトを隠しつつ、
         // マスク部分を開閉する振る舞いを与える
@@ -52,7 +59,8 @@ export default class MaskingTypePlugin extends Plugin {
                 this.boldElement.maskAll(el);
                 this.boldElement.addShowAndMaskBehaviorAll(
                     el,
-                    PluginContext.state.selectedHint
+                    PluginContext.state.selectedHint,
+                    isMobile
                 );
             }
 
@@ -60,7 +68,8 @@ export default class MaskingTypePlugin extends Plugin {
                 this.italicElement.maskAll(el);
                 this.italicElement.addShowAndMaskBehaviorAll(
                     el,
-                    PluginContext.state.selectedHint
+                    PluginContext.state.selectedHint,
+                    isMobile
                 );
             }
 
@@ -68,7 +77,8 @@ export default class MaskingTypePlugin extends Plugin {
                 this.highlightElement.maskAll(el);
                 this.highlightElement.addShowAndMaskBehaviorAll(
                     el,
-                    PluginContext.state.selectedHint
+                    PluginContext.state.selectedHint,
+                    isMobile
                 );
             }
 

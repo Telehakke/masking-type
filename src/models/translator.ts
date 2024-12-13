@@ -16,6 +16,8 @@ export type Translation = {
     readonly footer: string;
     readonly copySucceeded: string;
     readonly copyFailed: string;
+    readonly displayOnMouseOver: string;
+    readonly descriptionOfDisplayOnMouseOver: string;
 };
 
 const translationEN: Translation = {
@@ -24,7 +26,7 @@ const translationEN: Translation = {
     maskHighlight: "Mask highlight",
     setForEachNote: "Set for each note",
     descriptionOfSetForEachNote:
-        "Copy the property and paste it into the beginning of the note. Next, check the item you want to hide.",
+        "Copy the property from the button and paste it into the beginning of the note. Next, check the item you want to hide.",
     hint: "Hint",
     descriptionOfHint: "Show a hint before displaying all.",
     none: "None",
@@ -35,6 +37,9 @@ const translationEN: Translation = {
     footer: "Reopening the note will reflect the change in settings.",
     copySucceeded: "Copy succeeded",
     copyFailed: "Copy failed",
+    displayOnMouseOver: "Display on mouse over",
+    descriptionOfDisplayOnMouseOver:
+        "Hover the mouse pointer over the filled area to display the text. (desktop only)",
 };
 
 const translationJA: Translation = {
@@ -43,7 +48,7 @@ const translationJA: Translation = {
     maskHighlight: "ハイライトを隠す",
     setForEachNote: "ノートごとに設定する",
     descriptionOfSetForEachNote:
-        "プロパティをコピーし、ノートの先頭にペーストします。次に、隠したい項目にチェックを付けてください。",
+        "ボタンからプロパティをコピーし、ノートの先頭にペーストします。次に、隠したい項目にチェックを付けてください",
     hint: "ヒント",
     descriptionOfHint: "全て表示する前にヒントを表示します",
     none: "なし",
@@ -54,6 +59,9 @@ const translationJA: Translation = {
     footer: "ノートを開き直すことで、設定の変更が反映されます",
     copySucceeded: "コピーしました",
     copyFailed: "コピーに失敗しました",
+    displayOnMouseOver: "マウスオーバーで表示",
+    descriptionOfDisplayOnMouseOver:
+        "マウスポインタを塗りつぶし箇所に重ねることでテキストを表示します（デスクトップ専用）",
 };
 
 export class Translator {

@@ -155,6 +155,22 @@ highlight: false
                 });
         }
 
+        /* -------------------------------------------------------------------------- */
+
+        new Setting(containerEl)
+            .setName(this.translation.displayOnMouseOver)
+            .setDesc(this.translation.descriptionOfDisplayOnMouseOver)
+            .setHeading()
+            .addToggle((c) => {
+                c.setValue(PluginContext.state.shouldDisplayOnMouseOver);
+                c.onChange((v) => {
+                    PluginContext.state = PluginContext.copyWith({
+                        shouldDisplayOnMouseOver: v,
+                    });
+                    this.pluginStateRepository.save(PluginContext.state);
+                });
+            });
+
         const footer = createEl("p", "mt-note");
         footer.textContent = this.translation.footer;
         containerEl.appendChild(footer);

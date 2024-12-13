@@ -9,6 +9,8 @@ export default class PluginContext {
         selectedHint: { ...DefaultPluginState.value.selectedHint },
         blurStrength: DefaultPluginState.value.blurStrength,
         peekingPercentage: DefaultPluginState.value.peekingPercentage,
+        shouldDisplayOnMouseOver:
+            DefaultPluginState.value.shouldDisplayOnMouseOver,
     };
 
     /**
@@ -22,6 +24,7 @@ export default class PluginContext {
         selectedHint,
         blurStrength,
         peekingPercentage,
+        shouldDisplayOnMouseOver
     }: {
         shouldMaskBold?: boolean;
         shouldMaskItalic?: boolean;
@@ -29,6 +32,7 @@ export default class PluginContext {
         selectedHint?: Hint;
         blurStrength?: number;
         peekingPercentage?: number;
+        shouldDisplayOnMouseOver?: boolean
     }): PluginState => {
         const copied: PluginState = {
             shouldMaskBold:
@@ -43,6 +47,8 @@ export default class PluginContext {
                 blurStrength ?? PluginContext.state.blurStrength,
             peekingPercentage:
                 peekingPercentage ?? PluginContext.state.peekingPercentage,
+            shouldDisplayOnMouseOver:
+                shouldDisplayOnMouseOver ?? PluginContext.state.shouldDisplayOnMouseOver
         };
         return copied;
     };

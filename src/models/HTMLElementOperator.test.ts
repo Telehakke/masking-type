@@ -63,10 +63,14 @@ test("振る舞いを付与すると、データセットも付与されてい�
     const element = document.createElement("strong");
     const root = appendToRoot(element);
 
-    boldElement.addShowAndMaskBehaviorAll(root, {
-        type: "none",
-        value: 0,
-    });
+    boldElement.addShowAndMaskBehaviorAll(
+        root,
+        {
+            type: "none",
+            value: 0,
+        },
+        false
+    );
 
     expect(element.dataset.canMask).toBe("true");
 });
@@ -75,10 +79,14 @@ describe("クリックしたときの状態変化をテスト", () => {
     const element = document.createElement("strong");
     const root = appendToRoot(element);
 
-    boldElement.addShowAndMaskBehaviorAll(root, {
-        type: "none",
-        value: 0,
-    });
+    boldElement.addShowAndMaskBehaviorAll(
+        root,
+        {
+            type: "none",
+            value: 0,
+        },
+        false
+    );
 
     test("クリックで非表示状態へと変化するかどうか", () => {
         element.click();
@@ -98,10 +106,14 @@ describe.each([1, 2, 3, 4])(
         const element = document.createElement("strong");
         const root = appendToRoot(element);
 
-        boldElement.addShowAndMaskBehaviorAll(root, {
-            type: "blur",
-            value: v,
-        });
+        boldElement.addShowAndMaskBehaviorAll(
+            root,
+            {
+                type: "blur",
+                value: v,
+            },
+            false
+        );
 
         test(`クリックで非表示状態へと変化するかどうか（mt-blur-${v}）`, () => {
             element.click();
@@ -127,10 +139,14 @@ describe.each([10, 20, 30, 40, 50])(
         const element = document.createElement("strong");
         const root = appendToRoot(element);
 
-        boldElement.addShowAndMaskBehaviorAll(root, {
-            type: "peek",
-            value: v,
-        });
+        boldElement.addShowAndMaskBehaviorAll(
+            root,
+            {
+                type: "peek",
+                value: v,
+            },
+            false
+        );
 
         test(`クリックで非表示状態へと変化するかどうか（mt-peek-${v}）`, () => {
             element.click();
@@ -156,10 +172,14 @@ test("振る舞いを持つかどうかの判定1", () => {
     const element = document.createElement("strong");
     const root = appendToRoot(element);
 
-    boldElement.addShowAndMaskBehaviorAll(root, {
-        type: "none",
-        value: 0,
-    });
+    boldElement.addShowAndMaskBehaviorAll(
+        root,
+        {
+            type: "none",
+            value: 0,
+        },
+        false
+    );
     const result = boldElement.canMaskAll(root);
 
     expect(result).toBeTruthy();
