@@ -18,6 +18,8 @@ export type Translation = {
     readonly copyFailed: string;
     readonly displayOnMouseOver: string;
     readonly descriptionOfDisplayOnMouseOver: string;
+    readonly pdfClozeTest: string;
+    readonly descriptionPdfClozeTest: string;
 };
 
 const translationEN: Translation = {
@@ -40,6 +42,9 @@ const translationEN: Translation = {
     displayOnMouseOver: "Display on mouse over",
     descriptionOfDisplayOnMouseOver:
         "Hover the mouse pointer over the filled area to display the text. (desktop only)",
+    pdfClozeTest: "PDF cloze test",
+    descriptionPdfClozeTest:
+        "Convert filled areas to cloze test when using Export to PDF. (desktop only)",
 };
 
 const translationJA: Translation = {
@@ -62,6 +67,9 @@ const translationJA: Translation = {
     displayOnMouseOver: "マウスオーバーで表示",
     descriptionOfDisplayOnMouseOver:
         "マウスポインタを塗りつぶし箇所に重ねることでテキストを表示します（デスクトップ専用）",
+    pdfClozeTest: "PDFの穴埋め化",
+    descriptionPdfClozeTest:
+        "PDFにエクスポートを使用する際に、塗りつぶし箇所を穴埋め問題に変換します（デスクトップ専用）",
 };
 
 export class Translator {

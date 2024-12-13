@@ -15,6 +15,7 @@ import PluginStateRepository from "./models/pluginStateRepository";
 import PluginContext from "./models/pluginContext";
 import { NoteState, NoteStateKey } from "./models/types";
 import { Translator } from "./models/translator";
+import PDFClozeTest from "./models/PDFClozeTest";
 
 export default class MaskingTypePlugin extends Plugin {
     private readonly pluginStateRepository = new PluginStateRepository(this);
@@ -35,25 +36,11 @@ export default class MaskingTypePlugin extends Plugin {
 
         // 閲覧モードにおいて、太字、斜体、ハイライトを隠しつつ、
         // マスク部分を開閉する振る舞いを与える
-        this.registerMarkdownPostProcessor((el, ctx) => {
+        this.registerMarkdownPostProcessor((el) => {
             // ライブプレビューにおいて、
             // テーブルとコールアウトにテキストを隠す振る舞いを付与しない
             if (el.classList.contains("table-cell-wrapper")) return;
             if (el.classList.contains("markdown-rendered")) return;
-
-            // ノートにプロパティがあれば、その設定を優先する
-            const frontmatter = ctx.frontmatter;
-            if (frontmatter != null) {
-                noteState.bold =
-                    frontmatter[NoteStateKey.bold] ??
-                    PluginContext.state.shouldMaskBold;
-                noteState.italic =
-                    frontmatter[NoteStateKey.italic] ??
-                    PluginContext.state.shouldMaskItalic;
-                noteState.highlight =
-                    frontmatter[NoteStateKey.highlight] ??
-                    PluginContext.state.shouldMaskHighlight;
-            }
 
             if (noteState.bold) {
                 this.boldElement.maskAll(el);
@@ -106,13 +93,31 @@ export default class MaskingTypePlugin extends Plugin {
             })
         );
 
-        // ファイルが開かれたら状態を初期化する
+        // ファイルが開かれたら呼ばれる関数
         this.registerEvent(
-            this.app.workspace.on("file-open", () => {
+            this.app.workspace.on("file-open", (file) => {
                 this.elements = [];
-                noteState.bold = PluginContext.state.shouldMaskBold;
-                noteState.italic = PluginContext.state.shouldMaskItalic;
-                noteState.highlight = PluginContext.state.shouldMaskHighlight;
+                if (file == null) return;
+
+                // ノートにプロパティがあれば、その設定を優先する
+                const frontmatter =
+                    this.app.metadataCache.getFileCache(file)?.frontmatter ??
+                    {};
+                noteState.bold =
+                    frontmatter[NoteStateKey.bold] ??
+                    PluginContext.state.shouldMaskBold;
+                noteState.italic =
+                    frontmatter[NoteStateKey.italic] ??
+                    PluginContext.state.shouldMaskItalic;
+                noteState.highlight =
+                    frontmatter[NoteStateKey.highlight] ??
+                    PluginContext.state.shouldMaskHighlight;
+
+                if (PluginContext.state.shouldSetClozeTestStyle) {
+                    PDFClozeTest.setStyles(noteState);
+                } else {
+                    PDFClozeTest.unsetStyles();
+                }
             })
         );
 

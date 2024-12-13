@@ -155,3 +155,33 @@ p.mt-note {
     font-size: var(--font-ui-small);
     text-align: center;
 }
+
+/* -------------------------------------------------------------------------- */
+
+body {
+    --mt-print-strong-color: inherit;
+    --mt-print-strong-border: inherit;
+    --mt-print-em-color: inherit;
+    --mt-print-em-border: inherit;
+    --mt-print-mark-color: inherit;
+    --mt-print-mark-background-color: var(--text-highlight-bg);
+    --mt-print-mark-border: inherit;
+}
+
+@media print {
+    strong {
+        color: var(--mt-print-strong-color);
+        border-bottom: var(--mt-print-strong-border);
+    }
+
+    em {
+        color: var(--mt-print-em-color);
+        border-bottom: var(--mt-print-em-border);
+    }
+
+    mark {
+        color: var(--mt-print-mark-color) !important;
+        background-color: var(--mt-print-mark-background-color) !important;
+        border-bottom: var(--mt-print-mark-border);
+    }
+}

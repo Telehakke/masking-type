@@ -48,6 +48,7 @@ test("PluginState型であるかどうかの判定1", () => {
         blurStrength: 0,
         peekingPercentage: 0,
         shouldDisplayOnMouseOver: false,
+        shouldSetClozeTestStyle: false,
     };
     expect(isPluginState(value)).toBeTruthy();
 });

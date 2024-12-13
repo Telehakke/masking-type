@@ -9,6 +9,7 @@ export default class DefaultPluginState {
         blurStrength: 2,
         peekingPercentage: 30,
         shouldDisplayOnMouseOver: false,
+        shouldSetClozeTestStyle: false,
     };
 
     /**
@@ -22,7 +23,8 @@ export default class DefaultPluginState {
         selectedHint,
         blurStrength,
         peekingPercentage,
-        shouldDisplayOnMouseOver
+        shouldDisplayOnMouseOver,
+        shouldSetClozeTestStyle
     }: {
         shouldMaskBold?: boolean;
         shouldMaskItalic?: boolean;
@@ -31,6 +33,7 @@ export default class DefaultPluginState {
         blurStrength?: number
         peekingPercentage?: number;
         shouldDisplayOnMouseOver?: boolean
+        shouldSetClozeTestStyle?: boolean
     }): PluginState => {
         const copied: PluginState = {
             shouldMaskBold:
@@ -46,7 +49,9 @@ export default class DefaultPluginState {
             peekingPercentage:
                 peekingPercentage ?? this.value.peekingPercentage,
             shouldDisplayOnMouseOver:
-                shouldDisplayOnMouseOver ?? this.value.shouldDisplayOnMouseOver
+                shouldDisplayOnMouseOver ?? this.value.shouldDisplayOnMouseOver,
+            shouldSetClozeTestStyle:
+                shouldSetClozeTestStyle ?? this.value.shouldSetClozeTestStyle
         };
         return copied;
     };

@@ -28,6 +28,8 @@ export default class PluginStateRepository {
             peekingPercentage: data[PluginStateKey.peekingPercentage],
             shouldDisplayOnMouseOver:
                 data[PluginStateKey.shouldDisplayOnMouseOver],
+            shouldSetClozeTestStyle:
+                data[PluginStateKey.shouldSetClozeTestStyle],
         });
         return state;
     };
