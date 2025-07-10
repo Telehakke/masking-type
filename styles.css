@@ -185,3 +185,17 @@ body {
         border-bottom: var(--mt-print-mark-border);
     }
 }
+
+/* -------------------------------------------------------------------------- */
+
+.mt-mask > code {
+    background-color: transparent;
+}
+
+.mt-peek-10 > code,
+.mt-peek-20 > code,
+.mt-peek-30 > code,
+.mt-peek-40 > code,
+.mt-peek-50 > code {
+    background-color: transparent;
+}
