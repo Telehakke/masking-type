@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import DefaultPluginState from "./defaultPluginState";
-import { Hint, PluginState } from "./types";
+import DefaultPluginState from "../defaultPluginState";
+import { Hint, PluginState } from "../types";
 
 test("デフォルトの値を取得できるかどうか", () => {
     const result = DefaultPluginState.copyWith({});

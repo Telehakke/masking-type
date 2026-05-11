@@ -9,6 +9,7 @@ export default class DefaultPluginState {
         blurStrength: 2,
         peekingPercentage: 30,
         shouldDisplayOnMouseOver: false,
+        shouldMuskOnMouseLeave: false,
         shouldSetClozeTestStyle: false,
     };
 
@@ -24,17 +25,19 @@ export default class DefaultPluginState {
         blurStrength,
         peekingPercentage,
         shouldDisplayOnMouseOver,
+        shouldMuskOnMouseLeave,
         shouldSetClozeTestStyle
-    }: {
-        shouldMaskBold?: boolean;
-        shouldMaskItalic?: boolean;
-        shouldMaskHighlight?: boolean;
-        selectedHint?: Hint;
-        blurStrength?: number
-        peekingPercentage?: number;
-        shouldDisplayOnMouseOver?: boolean
-        shouldSetClozeTestStyle?: boolean
-    }): PluginState => {
+    }: Partial<{
+        shouldMaskBold: boolean;
+        shouldMaskItalic: boolean;
+        shouldMaskHighlight: boolean;
+        selectedHint: Hint;
+        blurStrength: number
+        peekingPercentage: number;
+        shouldDisplayOnMouseOver: boolean
+        shouldMuskOnMouseLeave: boolean
+        shouldSetClozeTestStyle: boolean
+    }>): PluginState => {
         const copied: PluginState = {
             shouldMaskBold:
                 shouldMaskBold ?? this.value.shouldMaskBold,
@@ -50,6 +53,8 @@ export default class DefaultPluginState {
                 peekingPercentage ?? this.value.peekingPercentage,
             shouldDisplayOnMouseOver:
                 shouldDisplayOnMouseOver ?? this.value.shouldDisplayOnMouseOver,
+            shouldMuskOnMouseLeave:
+                shouldMuskOnMouseLeave ?? this.value.shouldMuskOnMouseLeave,
             shouldSetClozeTestStyle:
                 shouldSetClozeTestStyle ?? this.value.shouldSetClozeTestStyle
         };

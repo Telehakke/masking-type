@@ -1,6 +1,6 @@
 import { Plugin } from "obsidian";
-import { PluginState, PluginStateKey } from "./types";
 import DefaultPluginState from "./defaultPluginState";
+import { PluginState, PluginStateKey } from "./types";
 
 export default class PluginStateRepository {
     private readonly plugin: Plugin;
@@ -28,6 +28,7 @@ export default class PluginStateRepository {
             peekingPercentage: data[PluginStateKey.peekingPercentage],
             shouldDisplayOnMouseOver:
                 data[PluginStateKey.shouldDisplayOnMouseOver],
+            shouldMuskOnMouseLeave: data[PluginStateKey.shouldMuskOnMouseLeave],
             shouldSetClozeTestStyle:
                 data[PluginStateKey.shouldSetClozeTestStyle],
         });

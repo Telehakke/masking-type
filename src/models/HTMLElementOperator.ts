@@ -66,7 +66,7 @@ class BlurClassName {
             this.blur1,
             this.blur2,
             this.blur3,
-            this.blur4
+            this.blur4,
         );
     };
 
@@ -128,7 +128,7 @@ class PeekClassName {
             this.peeked20,
             this.peeked30,
             this.peeked40,
-            this.peeked50
+            this.peeked50,
         );
     };
 
@@ -180,7 +180,7 @@ abstract class HTMLElementOperator {
     addShowAndMaskBehaviorAll = (
         element: HTMLElement,
         hint: Hint,
-        isMobile: boolean
+        isMobile: boolean,
     ): void => {
         element
             .querySelectorAll(this.selector) //
@@ -193,11 +193,14 @@ abstract class HTMLElementOperator {
                 if (PluginContext.state.shouldDisplayOnMouseOver) {
                     this.addMouseoverEvent(v, hint, isMobile);
                 }
+                if (PluginContext.state.shouldMuskOnMouseLeave) {
+                    this.addMouseleaveEvent(v, isMobile);
+                }
             });
     };
 
     protected addClickEvent = (element: Element, hint: Hint): void => {
-        element.addEventListener("click", (_) => {
+        element.addEventListener("click", () => {
             if (hint.type === HintEnum.blur) {
                 BlurClassName.handleClick(element, hint.value);
                 return;
@@ -213,7 +216,7 @@ abstract class HTMLElementOperator {
     protected addMouseoverEvent = (
         element: HTMLElement,
         hint: Hint,
-        isMobile: boolean
+        isMobile: boolean,
     ): void => {
         element.addEventListener("mouseover", (_) => {
             if (isMobile) return;
@@ -227,6 +230,19 @@ abstract class HTMLElementOperator {
                 return;
             }
             MaskClassName.handleClick(element);
+        });
+    };
+
+    protected addMouseleaveEvent = (
+        element: HTMLElement,
+        isMobile: boolean,
+    ): void => {
+        element.addEventListener("mouseleave", () => {
+            if (isMobile) return;
+            if (MaskClassName.contains(element)) return;
+            if (BlurClassName.contains(element)) return;
+            if (PeekClassName.contains(element)) return;
+            MaskClassName.add(element);
         });
     };
 

@@ -1,9 +1,9 @@
 import { App, Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
-import PluginStateRepository from "../models/pluginStateRepository";
-import { HintEnum, HintType } from "../models/types";
-import { Translation } from "../models/translator";
+import { writeTextToClipboard } from "../models/clipboard";
 import PluginContext from "../models/pluginContext";
-import Clipboard from "../models/clipboard";
+import PluginStateRepository from "../models/pluginStateRepository";
+import { Translation } from "../models/translator";
+import { HintEnum, HintType } from "../models/types";
 
 export default class MaskingTypeSettingTab extends PluginSettingTab {
     private readonly pluginStateRepository: PluginStateRepository;
@@ -13,7 +13,7 @@ export default class MaskingTypeSettingTab extends PluginSettingTab {
         app: App,
         plugin: Plugin,
         pluginStateRepository: PluginStateRepository,
-        translation: Translation
+        translation: Translation,
     ) {
         super(app, plugin);
         this.pluginStateRepository = pluginStateRepository;
@@ -72,7 +72,7 @@ export default class MaskingTypeSettingTab extends PluginSettingTab {
             .addButton((c) => {
                 c.setIcon("clipboard-copy");
                 c.onClick((_) => {
-                    Clipboard.write(
+                    writeTextToClipboard(
 `---
 bold: false
 italic: false
@@ -166,6 +166,22 @@ highlight: false
                 c.onChange((v) => {
                     PluginContext.state = PluginContext.copyWith({
                         shouldDisplayOnMouseOver: v,
+                    });
+                    this.pluginStateRepository.save(PluginContext.state);
+                });
+            });
+
+        /* -------------------------------------------------------------------------- */
+
+        new Setting(containerEl)
+            .setName(this.translation.maskOnMouseLeave)
+            .setDesc(this.translation.descriptionOfMaskOnMouseLeave)
+            .setHeading()
+            .addToggle((c) => {
+                c.setValue(PluginContext.state.shouldMuskOnMouseLeave);
+                c.onChange((v) => {
+                    PluginContext.state = PluginContext.copyWith({
+                        shouldMuskOnMouseLeave: v,
                     });
                     this.pluginStateRepository.save(PluginContext.state);
                 });
