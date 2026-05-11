@@ -1,26 +1,28 @@
 import { LanguageEnum } from "./types";
 
-export type Translation = {
-    readonly maskBold: string;
-    readonly maskItalic: string;
-    readonly maskHighlight: string;
-    readonly setForEachNote: string;
-    readonly descriptionOfSetForEachNote: string;
-    readonly hint: string;
-    readonly descriptionOfHint: string;
-    readonly none: string;
-    readonly blur: string;
-    readonly peek: string;
-    readonly blurStrength: string;
-    readonly peekPercentage: string;
-    readonly footer: string;
-    readonly copySucceeded: string;
-    readonly copyFailed: string;
-    readonly displayOnMouseOver: string;
-    readonly descriptionOfDisplayOnMouseOver: string;
-    readonly pdfClozeTest: string;
-    readonly descriptionPdfClozeTest: string;
-};
+export type Translation = Readonly<{
+    maskBold: string;
+    maskItalic: string;
+    maskHighlight: string;
+    setForEachNote: string;
+    descriptionOfSetForEachNote: string;
+    hint: string;
+    descriptionOfHint: string;
+    none: string;
+    blur: string;
+    peek: string;
+    blurStrength: string;
+    peekPercentage: string;
+    footer: string;
+    copySucceeded: string;
+    copyFailed: string;
+    displayOnMouseOver: string;
+    descriptionOfDisplayOnMouseOver: string;
+    maskOnMouseLeave: string;
+    descriptionOfMaskOnMouseLeave: string;
+    pdfClozeTest: string;
+    descriptionPdfClozeTest: string;
+}>;
 
 const translationEN: Translation = {
     maskBold: "Mask bold",
@@ -42,6 +44,9 @@ const translationEN: Translation = {
     displayOnMouseOver: "Display on mouse over",
     descriptionOfDisplayOnMouseOver:
         "Hover the mouse pointer over the filled area to display the text. (desktop only)",
+    maskOnMouseLeave: "Mask on mouse leave",
+    descriptionOfMaskOnMouseLeave:
+        "When the mouse pointer moves away from the displayed text, it is automatically masked again. (desktop only)",
     pdfClozeTest: "PDF cloze test",
     descriptionPdfClozeTest:
         "Convert filled areas to cloze test when using Export to PDF. (desktop only)",
@@ -67,6 +72,9 @@ const translationJA: Translation = {
     displayOnMouseOver: "マウスオーバーで表示",
     descriptionOfDisplayOnMouseOver:
         "マウスポインタを塗りつぶし箇所に重ねることでテキストを表示します（デスクトップ専用）",
+    maskOnMouseLeave: "マウスリーブで隠す",
+    descriptionOfMaskOnMouseLeave:
+        "表示されたテキストからマウスポインタが離れると、自動的に再マスクされます（デスクトップ専用）",
     pdfClozeTest: "PDFの穴埋め化",
     descriptionPdfClozeTest:
         "PDFにエクスポートを使用する際に、塗りつぶし箇所を穴埋め問題に変換します（デスクトップ専用）",

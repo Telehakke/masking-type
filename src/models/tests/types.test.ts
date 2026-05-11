@@ -7,7 +7,7 @@ import {
     isPluginState,
     NoteState,
     PluginState,
-} from "./types";
+} from "../types";
 
 test("Hint型であるかどうかの判定1", () => {
     const value: Hint = {
@@ -48,6 +48,7 @@ test("PluginState型であるかどうかの判定1", () => {
         blurStrength: 0,
         peekingPercentage: 0,
         shouldDisplayOnMouseOver: false,
+        shouldMuskOnMouseLeave: false,
         shouldSetClozeTestStyle: false,
     };
     expect(isPluginState(value)).toBeTruthy();

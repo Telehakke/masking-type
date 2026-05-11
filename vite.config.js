@@ -6,10 +6,10 @@ export default defineConfig({
         emptyOutDir: false,
         lib: {
             entry: "src/main.ts",
-            fileName: (_, __) => "main.js",
+            fileName: () => "main.js",
             formats: ["cjs"],
         },
-        rollupOptions: {
+        rolldownOptions: {
             external: ["obsidian"],
         },
     },

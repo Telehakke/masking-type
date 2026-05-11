@@ -40,19 +40,21 @@ export const PluginStateKey = {
     blurStrength: "blurStrength",
     peekingPercentage: "peekingPercentage",
     shouldDisplayOnMouseOver: "shouldDisplayOnMouseOver",
+    shouldMuskOnMouseLeave: "shouldMuskOnMouseLeave",
     shouldSetClozeTestStyle: "shouldSetClozeTestStyle",
 } as const;
 
-export type PluginState = {
-    readonly shouldMaskBold: boolean;
-    readonly shouldMaskItalic: boolean;
-    readonly shouldMaskHighlight: boolean;
-    readonly selectedHint: Hint;
-    readonly blurStrength: number;
-    readonly peekingPercentage: number;
-    readonly shouldDisplayOnMouseOver: boolean;
-    readonly shouldSetClozeTestStyle: boolean;
-};
+export type PluginState = Readonly<{
+    shouldMaskBold: boolean;
+    shouldMaskItalic: boolean;
+    shouldMaskHighlight: boolean;
+    selectedHint: Hint;
+    blurStrength: number;
+    peekingPercentage: number;
+    shouldDisplayOnMouseOver: boolean;
+    shouldMuskOnMouseLeave: boolean;
+    shouldSetClozeTestStyle: boolean;
+}>;
 
 // prettier-ignore
 export const isPluginState = (value: any): value is PluginState => {
@@ -64,6 +66,7 @@ export const isPluginState = (value: any): value is PluginState => {
     if (typeof value[PluginStateKey.blurStrength] !== "number") return false;
     if (typeof value[PluginStateKey.peekingPercentage] !== "number") return false;
     if (typeof value[PluginStateKey.shouldDisplayOnMouseOver] !== "boolean") return false;
+    if (typeof value[PluginStateKey.shouldMuskOnMouseLeave] !== "boolean") return false;
     if (typeof value[PluginStateKey.shouldSetClozeTestStyle] !== "boolean") return false;
     return true;
 };

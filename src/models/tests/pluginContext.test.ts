@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, test } from "vitest";
-import PluginContext from "./pluginContext";
-import DefaultPluginState from "./defaultPluginState";
+import DefaultPluginState from "../defaultPluginState";
+import PluginContext from "../pluginContext";
 
 describe("copyWith()メソッドのテスト", () => {
     beforeAll(() => {
