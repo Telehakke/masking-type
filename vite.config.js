@@ -10,10 +10,14 @@ export default defineConfig({
             formats: ["cjs"],
         },
         rolldownOptions: {
+            output: {
+                assetFileNames(chunkInfo) {
+                    if (chunkInfo.names[0] === "masking-type.css")
+                        return "styles.css";
+                    return "assets/[name]-[hash][extname]";
+                },
+            },
             external: ["obsidian"],
         },
-    },
-    test: {
-        environment: "jsdom",
     },
 });

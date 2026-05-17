@@ -1,22 +1,17 @@
-import { App, Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
+import { Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
 import { writeTextToClipboard } from "../models/clipboard";
-import PluginContext from "../models/pluginContext";
-import PluginStateRepository from "../models/pluginStateRepository";
+import { Config } from "../models/config";
 import { Translation } from "../models/translator";
-import { HintEnum, HintType } from "../models/types";
+import { DecorationEnum, HintEnum, HintType } from "../models/types";
+import { BlurStrength, PeekingPercentage } from "../models/validator";
 
 export default class MaskingTypeSettingTab extends PluginSettingTab {
-    private readonly pluginStateRepository: PluginStateRepository;
+    private readonly plugin: Plugin;
     private readonly translation: Translation;
 
-    constructor(
-        app: App,
-        plugin: Plugin,
-        pluginStateRepository: PluginStateRepository,
-        translation: Translation,
-    ) {
-        super(app, plugin);
-        this.pluginStateRepository = pluginStateRepository;
+    constructor(plugin: Plugin, translation: Translation) {
+        super(plugin.app, plugin);
+        this.plugin = plugin;
         this.translation = translation;
     }
 
@@ -29,57 +24,54 @@ export default class MaskingTypeSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName(this.translation.maskBold)
             .addToggle((c) => {
-                c.setValue(PluginContext.state.shouldMaskBold);
+                c.setValue(Config.store.shouldMaskBold);
                 c.onChange((v) => {
-                    PluginContext.state = PluginContext.copyWith({
-                        shouldMaskBold: v,
-                    });
-                    this.pluginStateRepository.save(PluginContext.state);
+                    const newStore = Config.store.setShouldMaskBold(v);
+                    Config.syncStore(this.plugin, newStore);
                 });
             });
 
         new Setting(containerEl)
             .setName(this.translation.maskItalic)
             .addToggle((c) => {
-                c.setValue(PluginContext.state.shouldMaskItalic);
+                c.setValue(Config.store.shouldMaskItalic);
                 c.onChange((v) => {
-                    PluginContext.state = PluginContext.copyWith({
-                        shouldMaskItalic: v,
-                    });
-                    this.pluginStateRepository.save(PluginContext.state);
+                    const newStore = Config.store.setShouldMaskItalic(v);
+                    Config.syncStore(this.plugin, newStore);
                 });
             });
 
         new Setting(containerEl)
             .setName(this.translation.maskHighlight)
             .addToggle((c) => {
-                c.setValue(PluginContext.state.shouldMaskHighlight);
+                c.setValue(Config.store.shouldMaskHighlight);
                 c.onChange((v) => {
-                    PluginContext.state = PluginContext.copyWith({
-                        shouldMaskHighlight: v,
-                    });
-                    this.pluginStateRepository.save(PluginContext.state);
+                    const newStore = Config.store.setShouldMaskHighlight(v);
+                    Config.syncStore(this.plugin, newStore);
                 });
             });
 
         /* -------------------------------------------------------------------------- */
 
-        // prettier-ignore
+        const propertyStr = [
+            "---",
+            `${DecorationEnum.bold}: false`,
+            `${DecorationEnum.italic}: false`,
+            `${DecorationEnum.highlight}: false`,
+            "---",
+        ].join("\n");
+
         new Setting(containerEl)
             .setName(this.translation.setForEachNote)
             .setDesc(this.translation.descriptionOfSetForEachNote)
             .setHeading()
             .addButton((c) => {
                 c.setIcon("clipboard-copy");
-                c.onClick((_) => {
+                c.onClick(() => {
                     writeTextToClipboard(
-`---
-bold: false
-italic: false
-highlight: false
----`,
+                        propertyStr,
                         () => new Notice(this.translation.copySucceeded),
-                        () => new Notice(this.translation.copyFailed)
+                        () => new Notice(this.translation.copyFailed),
                     );
                 });
             });
@@ -94,63 +86,58 @@ highlight: false
                 c.addOption(HintEnum.none, this.translation.none);
                 c.addOption(HintEnum.blur, this.translation.blur);
                 c.addOption(HintEnum.peek, this.translation.peek);
-                c.setValue(PluginContext.state.selectedHint.type);
+                c.setValue(Config.store.selectedHint.type);
                 c.onChange((v) => {
-                    let value = PluginContext.state.selectedHint.value;
-                    if (v === HintEnum.blur) {
-                        value = PluginContext.state.blurStrength;
-                    }
-                    if (v === HintEnum.peek) {
-                        value = PluginContext.state.peekingPercentage;
-                    }
+                    let value = Config.store.selectedHint.value;
+                    if (v === HintEnum.blur) value = Config.store.blurStrength;
+                    if (v === HintEnum.peek)
+                        value = Config.store.peekingPercentage;
 
-                    PluginContext.state = PluginContext.copyWith({
-                        selectedHint: {
-                            type: v as HintType,
-                            value: value,
-                        },
+                    const newStore = Config.store.setSelectedHint({
+                        type: v as HintType,
+                        value,
                     });
-                    this.pluginStateRepository.save(PluginContext.state);
+                    Config.syncStore(this.plugin, newStore);
                     this.display();
                 });
             });
 
-        if (PluginContext.state.selectedHint.type === HintEnum.peek) {
+        if (Config.store.selectedHint.type === HintEnum.peek) {
             new Setting(containerEl)
                 .setName(this.translation.peekPercentage)
                 .addSlider((c) => {
-                    c.setLimits(10, 50, 10);
-                    c.setValue(PluginContext.state.peekingPercentage);
+                    const { MIN, MAX } = PeekingPercentage;
+                    c.setLimits(MIN, MAX, 10);
+                    c.setValue(Config.store.peekingPercentage);
                     c.setDynamicTooltip();
                     c.onChange((v) => {
-                        PluginContext.state = PluginContext.copyWith({
-                            selectedHint: {
-                                type: PluginContext.state.selectedHint.type,
+                        const newStore = Config.store
+                            .setPeekingPercentage(v)
+                            .setSelectedHint({
+                                type: "peek",
                                 value: v,
-                            },
-                            peekingPercentage: v,
-                        });
-                        this.pluginStateRepository.save(PluginContext.state);
+                            });
+                        Config.syncStore(this.plugin, newStore);
                     });
                 });
         }
 
-        if (PluginContext.state.selectedHint.type === HintEnum.blur) {
+        if (Config.store.selectedHint.type === HintEnum.blur) {
             new Setting(containerEl)
                 .setName(this.translation.blurStrength)
                 .addSlider((c) => {
-                    c.setLimits(1, 4, 1);
-                    c.setValue(PluginContext.state.blurStrength);
+                    const { MIN, MAX } = BlurStrength;
+                    c.setLimits(MIN, MAX, 1);
+                    c.setValue(Config.store.blurStrength);
                     c.setDynamicTooltip();
                     c.onChange((v) => {
-                        PluginContext.state = PluginContext.copyWith({
-                            selectedHint: {
-                                type: PluginContext.state.selectedHint.type,
+                        const newStore = Config.store
+                            .setBlurStrength(v)
+                            .setSelectedHint({
+                                type: "blur",
                                 value: v,
-                            },
-                            blurStrength: v,
-                        });
-                        this.pluginStateRepository.save(PluginContext.state);
+                            });
+                        Config.syncStore(this.plugin, newStore);
                     });
                 });
         }
@@ -162,12 +149,11 @@ highlight: false
             .setDesc(this.translation.descriptionOfDisplayOnMouseOver)
             .setHeading()
             .addToggle((c) => {
-                c.setValue(PluginContext.state.shouldDisplayOnMouseOver);
+                c.setValue(Config.store.shouldDisplayOnMouseOver);
                 c.onChange((v) => {
-                    PluginContext.state = PluginContext.copyWith({
-                        shouldDisplayOnMouseOver: v,
-                    });
-                    this.pluginStateRepository.save(PluginContext.state);
+                    const newStore =
+                        Config.store.setShouldDisplayOnMouseOver(v);
+                    Config.syncStore(this.plugin, newStore);
                 });
             });
 
@@ -178,12 +164,10 @@ highlight: false
             .setDesc(this.translation.descriptionOfMaskOnMouseLeave)
             .setHeading()
             .addToggle((c) => {
-                c.setValue(PluginContext.state.shouldMuskOnMouseLeave);
+                c.setValue(Config.store.shouldMaskOnMouseLeave);
                 c.onChange((v) => {
-                    PluginContext.state = PluginContext.copyWith({
-                        shouldMuskOnMouseLeave: v,
-                    });
-                    this.pluginStateRepository.save(PluginContext.state);
+                    const newStore = Config.store.setShouldMaskOnMouseLeave(v);
+                    Config.syncStore(this.plugin, newStore);
                 });
             });
 
@@ -194,12 +178,10 @@ highlight: false
             .setDesc(this.translation.descriptionPdfClozeTest)
             .setHeading()
             .addToggle((c) => {
-                c.setValue(PluginContext.state.shouldSetClozeTestStyle);
+                c.setValue(Config.store.shouldSetClozeTestStyle);
                 c.onChange((v) => {
-                    PluginContext.state = PluginContext.copyWith({
-                        shouldSetClozeTestStyle: v,
-                    });
-                    this.pluginStateRepository.save(PluginContext.state);
+                    const newStore = Config.store.setShouldSetClozeTestStyle(v);
+                    Config.syncStore(this.plugin, newStore);
                 });
             });
 

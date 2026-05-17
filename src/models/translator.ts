@@ -1,5 +1,3 @@
-import { LanguageEnum } from "./types";
-
 export type Translation = Readonly<{
     maskBold: string;
     maskItalic: string;
@@ -80,16 +78,7 @@ const translationJA: Translation = {
         "PDFにエクスポートを使用する際に、塗りつぶし箇所を穴埋め問題に変換します（デスクトップ専用）",
 };
 
-export class Translator {
-    private static readonly translations: Map<string, Translation> = new Map([
-        [LanguageEnum.en, translationEN],
-        [LanguageEnum.ja, translationJA],
-    ]);
-
-    /**
-     * 指定した言語の翻訳文を取得
-     */
-    static getTranslation = (language: string): Translation => {
-        return this.translations.get(language) ?? translationEN;
-    };
-}
+export const getTranslation = (lang: string): Translation => {
+    if (lang.startsWith("ja")) return translationJA;
+    return translationEN;
+};
