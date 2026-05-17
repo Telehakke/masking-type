@@ -1,9 +1,4 @@
-export const LanguageEnum = {
-    en: "en",
-    ja: "ja",
-} as const;
-
-/* -------------------------------------------------------------------------- */
+import { isNotNull, isNumber } from "./typeGuard";
 
 export const HintEnum = {
     none: "none",
@@ -11,84 +6,30 @@ export const HintEnum = {
     peek: "peek",
 } as const;
 
-export type HintType = (typeof HintEnum)[keyof typeof HintEnum];
+export type HintType = keyof typeof HintEnum;
 
-export type Hint = {
-    readonly type: HintType;
-    readonly value: number;
-};
-
-export const isHint = (value: any): value is Hint => {
-    if (value == null) return false;
-    if (
-        value.type !== HintEnum.none &&
-        value.type !== HintEnum.blur &&
-        value.type !== HintEnum.peek
-    )
-        return false;
-    if (typeof value.value !== "number") return false;
-    return true;
-};
-
-/* -------------------------------------------------------------------------- */
-
-export const PluginStateKey = {
-    shouldMaskBold: "shouldMaskBold",
-    shouldMaskItalic: "shouldMaskItalic",
-    shouldMaskHighlight: "shouldMaskHighlight",
-    selectedHint: "selectedHint",
-    blurStrength: "blurStrength",
-    peekingPercentage: "peekingPercentage",
-    shouldDisplayOnMouseOver: "shouldDisplayOnMouseOver",
-    shouldMuskOnMouseLeave: "shouldMuskOnMouseLeave",
-    shouldSetClozeTestStyle: "shouldSetClozeTestStyle",
-} as const;
-
-export type PluginState = Readonly<{
-    shouldMaskBold: boolean;
-    shouldMaskItalic: boolean;
-    shouldMaskHighlight: boolean;
-    selectedHint: Hint;
-    blurStrength: number;
-    peekingPercentage: number;
-    shouldDisplayOnMouseOver: boolean;
-    shouldMuskOnMouseLeave: boolean;
-    shouldSetClozeTestStyle: boolean;
+export type Hint = Readonly<{
+    type: HintType;
+    value: number;
 }>;
 
-// prettier-ignore
-export const isPluginState = (value: any): value is PluginState => {
-    if (value == null) return false;
-    if (typeof value[PluginStateKey.shouldMaskBold] !== "boolean") return false;
-    if (typeof value[PluginStateKey.shouldMaskItalic] !== "boolean") return false;
-    if (typeof value[PluginStateKey.shouldMaskHighlight] !== "boolean") return false;
-    if (!isHint(value[PluginStateKey.selectedHint])) return false;
-    if (typeof value[PluginStateKey.blurStrength] !== "number") return false;
-    if (typeof value[PluginStateKey.peekingPercentage] !== "number") return false;
-    if (typeof value[PluginStateKey.shouldDisplayOnMouseOver] !== "boolean") return false;
-    if (typeof value[PluginStateKey.shouldMuskOnMouseLeave] !== "boolean") return false;
-    if (typeof value[PluginStateKey.shouldSetClozeTestStyle] !== "boolean") return false;
+export const isHint = (value: unknown): value is Hint => {
+    if (!isNotNull(value)) return false;
+    if (!Object.keys(HintEnum).some((v) => v === value.type)) return false;
+    if (!isNumber(value.value)) return false;
     return true;
 };
 
 /* -------------------------------------------------------------------------- */
 
-export const NoteStateKey = {
+export const DecorationEnum = {
     bold: "bold",
     italic: "italic",
     highlight: "highlight",
 } as const;
 
-export type NoteState = {
-    bold: boolean;
-    italic: boolean;
-    highlight: boolean;
-};
-
-export const isNoteState = (value: any): value is NoteState => {
-    if (value == null) return false;
-    if (typeof value[NoteStateKey.bold] !== "boolean") return false;
-    if (typeof value[NoteStateKey.italic] !== "boolean") return false;
-    if (typeof value[NoteStateKey.highlight] !== "boolean") return false;
-    return true;
-};
+export type NoteState = Readonly<{
+    [DecorationEnum.bold]: boolean;
+    [DecorationEnum.italic]: boolean;
+    [DecorationEnum.highlight]: boolean;
+}>;

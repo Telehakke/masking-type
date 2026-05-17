@@ -1,6 +1,4 @@
-/**
- * クリップボードにテキストの内容をコピーする
- */
+/** クリップボードにテキストの内容をコピーする */
 export const writeTextToClipboard = (
     text: string,
     success: () => void,

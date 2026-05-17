@@ -1,9 +1,9 @@
 {
     "id": "masking-type",
     "name": "Masking Type",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "minAppVersion": "1.5.3",
-    "description": "Mask bold, italic, and highlight",
+    "description": "Mask bold, italic, and highlight.",
     "author": "Telehakke",
     "isDesktopOnly": false
 }

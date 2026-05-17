@@ -1,76 +1,37 @@
-import { expect, test } from "vitest";
-import {
-    Hint,
-    HintEnum,
-    isHint,
-    isNoteState,
-    isPluginState,
-    NoteState,
-    PluginState,
-} from "../types";
+import { describe, expect, it } from "vitest";
+import { Hint, isHint } from "../types";
 
-test("Hint型であるかどうかの判定1", () => {
-    const value: Hint = {
-        type: HintEnum.none,
-        value: 0,
-    };
-    expect(isHint(value)).toBeTruthy();
-});
+describe("isHint", () => {
+    it("正常値に対してtrueを返す1", () => {
+        const hint: Hint = { type: "none", value: 0 };
+        const result = isHint(hint);
+        expect(result).toBeTruthy();
+    });
 
-test("Hint型であるかどうかの判定2", () => {
-    const value: Hint = {
-        type: HintEnum.peek,
-        value: 0,
-    };
-    expect(isHint(value)).toBeTruthy();
-});
+    it("正常値に対してtrueを返す2", () => {
+        const hint: Hint = { type: "blur", value: 0 };
+        const result = isHint(hint);
+        expect(result).toBeTruthy();
+    });
 
-test("Hint型であるかどうかの判定3", () => {
-    const value: Hint = {
-        type: HintEnum.blur,
-        value: 0,
-    };
-    expect(isHint(value)).toBeTruthy();
-});
+    it("正常値に対してtrueを返す3", () => {
+        const hint: Hint = { type: "peek", value: 0 };
+        const result = isHint(hint);
+        expect(result).toBeTruthy();
+    });
 
-test("Hint型であるかどうかの判定4", () => {
-    expect(isHint(null)).toBeFalsy();
-});
+    it("不正値に対してfalseを返す1", () => {
+        const result = isHint(null);
+        expect(result).toBeFalsy();
+    });
 
-/* -------------------------------------------------------------------------- */
+    it("不正値に対してfalseを返す2", () => {
+        const result = isHint({ type: "", value: 0 });
+        expect(result).toBeFalsy();
+    });
 
-test("PluginState型であるかどうかの判定1", () => {
-    const value: PluginState = {
-        shouldMaskBold: false,
-        shouldMaskItalic: false,
-        shouldMaskHighlight: false,
-        selectedHint: { type: HintEnum.none, value: 0 },
-        blurStrength: 0,
-        peekingPercentage: 0,
-        shouldDisplayOnMouseOver: false,
-        shouldMuskOnMouseLeave: false,
-        shouldSetClozeTestStyle: false,
-    };
-    expect(isPluginState(value)).toBeTruthy();
-});
-
-test("PluginState型であるかどうかの判定2", () => {
-    const value = null;
-    expect(isPluginState(value)).toBeFalsy();
-});
-
-/* -------------------------------------------------------------------------- */
-
-test("NoteState型であるかどうかの判定1", () => {
-    const value: NoteState = {
-        bold: false,
-        italic: false,
-        highlight: false,
-    };
-    expect(isNoteState(value)).toBeTruthy();
-});
-
-test("NoteState型であるかどうかの判定2", () => {
-    const value = null;
-    expect(isNoteState(value)).toBeFalsy();
+    it("不正値に対してfalseを返す3", () => {
+        const result = isHint({ type: "none", value: "" });
+        expect(result).toBeFalsy();
+    });
 });
