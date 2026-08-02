@@ -1,5 +1,6 @@
 import {
     BlurClassName,
+    ClassNameManager,
     getClassNameManager,
     MaskClassName,
     PeekClassName,
@@ -57,15 +58,30 @@ abstract class HTMLElementManager {
     };
 
     protected cycleClassNameOnClick = (el: Element, hint: Hint): void => {
-        el.addEventListener("click", () => this.handleClick(el, hint));
+        el.addEventListener("click", (ev) => {
+            const classNameManager = getClassNameManager(el.classList);
+            if (classNameManager.id !== UnmaskClassName.id) {
+                // リンクテキストがマスクされていれば、リンクの機能を無効化する
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+            this.handleClick(el, hint, classNameManager);
+        });
     };
 
     protected cycleClassNameOnMouseOver = (el: Element, hint: Hint): void => {
-        el.addEventListener("mouseover", () => this.handleClick(el, hint));
+        const classNameManager = getClassNameManager(el.classList);
+        el.addEventListener("mouseover", () =>
+            this.handleClick(el, hint, classNameManager),
+        );
     };
 
-    protected handleClick = (el: Element, hint: Hint): void => {
-        const className = getClassNameManager(el.classList).nextClassName(hint);
+    protected handleClick = (
+        el: Element,
+        hint: Hint,
+        classNameManager: ClassNameManager,
+    ): void => {
+        const className = classNameManager.nextClassName(hint);
         MaskClassName.remove(el);
         BlurClassName.remove(el);
         PeekClassName.remove(el);
